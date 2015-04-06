@@ -22,7 +22,7 @@
       <h1>
 <a id="notifibug-library-for-android" class="anchor" href="#notifibug-library-for-android" aria-hidden="true"><span class="octicon octicon-link"></span></a>NotifiBug Library for Android</h1>
 
-<p>It does what every bug client needs to do but little earlier</p>
+<p>It does what every bug client needs to do but little earlier and in a smarter way</p>
 
 <h2>
 <a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use it</h2>
@@ -42,7 +42,7 @@ crash reports to NotifiCrash service.</p>
 &lt;<span class="pl-ent">uses-permission</span> <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>android.permission.ACCESS_NETWORK_STATE<span class="pl-pds">"</span></span> /&gt;</pre></div>
 
 <h3>
-<a id="init-library" class="anchor" href="#init-library" aria-hidden="true"><span class="octicon octicon-link"></span></a>Init library</h3>
+<a id="init-library-in-your-project" class="anchor" href="#init-library-in-your-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Init library in your project</h3>
 
 <div class="highlight highlight-java"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MainActivity</span> <span class="pl-k">extends</span> <span class="pl-e">Activity</span> {
 
@@ -51,7 +51,7 @@ crash reports to NotifiCrash service.</p>
         <span class="pl-v">super</span><span class="pl-k">.</span>onCreate(savedInstanceState);
         setContentView(<span class="pl-smi">R</span><span class="pl-k">.</span>layout<span class="pl-k">.</span>activity_main);
 
-        <span class="pl-c">// Sentry will look for uncaught exceptions from previous runs and send them</span>
+        <span class="pl-c">// NotifiBug will look for uncaught exceptions from previous runs and send them</span>
         <span class="pl-smi">NotifiBug</span><span class="pl-k">.</span>init(<span class="pl-v">this</span><span class="pl-k">.</span>getApplicationContext(), <span class="pl-s"><span class="pl-pds">"</span>YOUR_SERIAL_NUMBER<span class="pl-pds">"</span></span>);
 
     }
