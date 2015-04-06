@@ -19,20 +19,94 @@
     </section>
 
     <section class="main-content">
-      <h3>
-<a id="welcome-to-androidnotifibug-library" class="anchor" href="#welcome-to-androidnotifibug-library" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to AndroidNotifiBug Library.</h3>
+      <h1>
+<a id="notifibug-library-for-android" class="anchor" href="#notifibug-library-for-android" aria-hidden="true"><span class="octicon octicon-link"></span></a>NotifiBug Library for Android</h1>
 
 <p>It does what every bug client needs to do but little earlier</p>
 
+<h2>
+<a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use it</h2>
+
+<p>Below is an example of how to register NotifiBug library to handle uncaught exceptions of you app and send 
+crash reports to NotifiCrash service.</p>
+
 <h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<a id="permissions-in-manifest" class="anchor" href="#permissions-in-manifest" aria-hidden="true"><span class="octicon octicon-link"></span></a>Permissions in manifest</h3>
 
-<p>Marko Arsic (<a href="https://github.com/marsicdev" class="user-mention">@marsicdev</a>)</p>
+<p>The <code>AndroidManifest.xml</code> requires the permission <code>android.permission.INTERNET</code> and would like the permission <code>android.permission.ACCESS_NETWORK_STATE</code> even though optional.</p>
+
+<div class="highlight highlight-xml"><pre><span class="pl-c">&lt;!-- REQUIRED to send captures to NotifiCrash service --&gt;</span>
+&lt;<span class="pl-ent">uses-permission</span> <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>android.permission.INTERNET<span class="pl-pds">"</span></span> /&gt;
+
+<span class="pl-c">&lt;!-- OPTIONAL but makes NotifiBug smarter --&gt;</span>
+&lt;<span class="pl-ent">uses-permission</span> <span class="pl-e">android</span><span class="pl-e">:</span><span class="pl-e">name</span>=<span class="pl-s"><span class="pl-pds">"</span>android.permission.ACCESS_NETWORK_STATE<span class="pl-pds">"</span></span> /&gt;</pre></div>
 
 <h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<a id="init-library" class="anchor" href="#init-library" aria-hidden="true"><span class="octicon octicon-link"></span></a>Init library</h3>
 
-<p>Having trouble with AndroidNotifiBug? Check out the <a href="">javadocs</a> or contact <a href="mailto:admin@ckl.io">admin@ckl.io</a> and we’ll help you sort it out.</p>
+<div class="highlight highlight-java"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MainActivity</span> <span class="pl-k">extends</span> <span class="pl-e">Activity</span> {
+
+    <span class="pl-k">@Override</span>
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">onCreate</span>(<span class="pl-smi">Bundle</span> <span class="pl-v">savedInstanceState</span>) {
+        <span class="pl-v">super</span><span class="pl-k">.</span>onCreate(savedInstanceState);
+        setContentView(<span class="pl-smi">R</span><span class="pl-k">.</span>layout<span class="pl-k">.</span>activity_main);
+
+        <span class="pl-c">// Sentry will look for uncaught exceptions from previous runs and send them</span>
+        <span class="pl-smi">NotifiBug</span><span class="pl-k">.</span>init(<span class="pl-v">this</span><span class="pl-k">.</span>getApplicationContext(), <span class="pl-s"><span class="pl-pds">"</span>YOUR_SERIAL_NUMBER<span class="pl-pds">"</span></span>);
+
+    }
+
+}</pre></div>
+
+<h3>
+<a id="capture-a-message" class="anchor" href="#capture-a-message" aria-hidden="true"><span class="octicon octicon-link"></span></a>Capture a message</h3>
+
+<div class="highlight highlight-java"><pre>    <span class="pl-smi">NotifiBug</span><span class="pl-k">.</span>captureMessage(<span class="pl-s"><span class="pl-pds">"</span>Something significant may have happened<span class="pl-pds">"</span></span>);</pre></div>
+
+<h3>
+<a id="set-a-listener-to-intercept-the-notifibugeventbuilder-before-each-capture" class="anchor" href="#set-a-listener-to-intercept-the-notifibugeventbuilder-before-each-capture" aria-hidden="true"><span class="octicon octicon-link"></span></a>Set a listener to intercept the NotifiBugEventBuilder before each capture</h3>
+
+<div class="highlight highlight-java"><pre><span class="pl-c">// CALL THIS BEFORE CALLING NotifiBug.init()</span>
+<span class="pl-c">// Sets a listener to intercept the NotifiBugEventBuilder before</span>
+<span class="pl-c">// each capture to set values that could change state</span>
+<span class="pl-smi">NotifiBug</span><span class="pl-k">.</span>setCaptureListener(<span class="pl-k">new</span> <span class="pl-smi">NotifiBugEventCaptureListener</span>() {
+
+    <span class="pl-k">@Override</span>
+    <span class="pl-k">public</span> <span class="pl-smi">NotifiBugEventBuilder</span> <span class="pl-en">beforeCapture</span>(<span class="pl-smi">NotifiBugEventBuilder</span> <span class="pl-v">builder</span>) {
+
+        <span class="pl-c">// Needs permission - &lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /&gt;</span>
+        <span class="pl-smi">ConnectivityManager</span> connManager <span class="pl-k">=</span> (<span class="pl-smi">ConnectivityManager</span>) getSystemService(<span class="pl-c1">CONNECTIVITY_SERVICE</span>);
+        <span class="pl-smi">NetworkInfo</span> mWifi <span class="pl-k">=</span> connManager<span class="pl-k">.</span>getNetworkInfo(<span class="pl-smi">ConnectivityManager</span><span class="pl-c1"><span class="pl-k">.</span>TYPE_WIFI</span>);
+
+        <span class="pl-c">// Sets extra key if wifi is connected</span>
+        <span class="pl-k">try</span> {
+            builder<span class="pl-k">.</span>getExtra()<span class="pl-k">.</span>put(<span class="pl-s"><span class="pl-pds">"</span>wifi<span class="pl-pds">"</span></span>, <span class="pl-smi">String</span><span class="pl-k">.</span>valueOf(mWifi<span class="pl-k">.</span>isConnected()));
+            builder<span class="pl-k">.</span>getTags()<span class="pl-k">.</span>put(<span class="pl-s"><span class="pl-pds">"</span>tag_1<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>value_1<span class="pl-pds">"</span></span>);
+        } <span class="pl-k">catch</span> (<span class="pl-smi">JSONException</span> e) {}
+
+        <span class="pl-k">return</span> builder;
+    }
+
+});
+</pre></div>
+
+<h2>
+<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h2>
+
+<p>Edited for NotifiCrash by Marko Arsic (<a href="https://github.com/marsicdev" class="user-mention">@marsicdev</a>)</p>
+
+<p>This is refactored and optimised <a href="https://github.com/joshdholtz/Sentry-Android">Sentry for Android</a> library.
+Credits for most of the code goes to <a href="https://github.com/joshdholtz" class="user-mention">@joshdholtz</a></p>
+
+<h2>
+<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h2>
+
+<p>Having trouble with NotifiBug? Check out the <a href="">javadocs</a> or contact <a href="mailto:marko@ckl.io">marko@ckl.io</a> and we’ll help you out.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>NotifiBug is available under the MIT license. See the <a href="https://github.com/CheesecakeLabs/AndroidNotifiBug/blob/master/LICENSE">LICENSE</a> file for more info.</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/CheesecakeLabs/AndroidNotifiBug">NotifiBug</a> is maintained by <a href="https://github.com/CheesecakeLabs">CheesecakeLabs</a>.</span>
