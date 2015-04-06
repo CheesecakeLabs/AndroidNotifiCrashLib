@@ -2,8 +2,8 @@
 
 It does what every bug client needs to do but little earlier
 
-Below is an example of how to register NotifiBug to handle uncaught exceptions and send crash
-to [NotifiCrash]() service and receive to [NotifiCrash App]()
+Below is an example of how to register NotifiBug library to handle uncaught exceptions of you app and send 
+crash reports to NotifiCrash service.
 
 ```xml
 <!-- REQUIRED to send captures to NotifiCrash service -->
@@ -54,7 +54,7 @@ The AndroidManifest.xml requires the permission `android.permission.INTERNET` an
     NotifiBug.captureMessage("Something significant may have happened");
 ```
 
-### Set a listener to intercept the SentryEventBuilder before each capture
+### Set a listener to intercept the NotifiBugEventBuilder before each capture
 ``` java
 // CALL THIS BEFORE CALLING NotifiBug.init()
 // Sets a listener to intercept the NotifiBugEventBuilder before
@@ -81,10 +81,15 @@ NotifiBug.setCaptureListener(new NotifiBugEventCaptureListener() {
 
 ```
 
+## Edited for NotifiCrash
+
+by Marko Arsić (@marsicdev)
+
 ## Credits
 
-This is refactored and optimised [Sentry for Android]() Library.
+This is refactored and optimised [Sentry for Android](https://github.com/joshdholtz/Sentry-Android) library.
+Credits for most of the code goes to @joshdholtz
 
 ## License
 
-NotifiBug is available under the MIT license. See the LICENSE file for more info.
+NotifiBug is available under the MIT license. See the [LICENSE](https://github.com/CheesecakeLabs/AndroidNotifiBug/blob/master/LICENSE) file for more info.

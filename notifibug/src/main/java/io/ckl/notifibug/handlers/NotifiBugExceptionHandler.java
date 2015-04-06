@@ -36,7 +36,7 @@ public class NotifiBugExceptionHandler implements UncaughtExceptionHandler {
             sendCrashes.execute();
 
         } else {
-            Log.e(Config.TAG, "NotifiBugEventBuilder in uncaughtException is null");
+            Log.d(Config.TAG, "NotifiBugEventBuilder in uncaughtException is null");
         }
 
         //call original handler

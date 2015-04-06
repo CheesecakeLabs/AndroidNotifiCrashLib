@@ -36,7 +36,7 @@ public class InternalStorage {
     /**
      * Returns list of unsent requests
      *
-     * @return ArrayList<NotifiBugEventRequest>
+     * @return ArrayList
      */
     public ArrayList<NotifiBugEventRequest> getUnsentRequests() {
         return unsentRequests;
@@ -49,7 +49,7 @@ public class InternalStorage {
      */
     public void addRequest(NotifiBugEventRequest request) {
         synchronized (this) {
-            Log.e(Config.TAG, "Adding request - " + request.getUuid());
+            Log.i(Config.TAG, "Adding request - " + request.getUuid());
             if (!this.unsentRequests.contains(request)) {
                 this.unsentRequests.add(request);
                 this.writeObject(NotifiBug.getInstance().getContext(), getUnsentRequests());
@@ -64,7 +64,7 @@ public class InternalStorage {
      */
     public void removeBuilder(NotifiBugEventRequest request) {
         synchronized (this) {
-            Log.e(Config.TAG, "Removing request - " + request.getUuid());
+            Log.i(Config.TAG, "Removing request - " + request.getUuid());
             this.unsentRequests.remove(request);
             this.writeObject(NotifiBug.getInstance().getContext(), getUnsentRequests());
         }
@@ -94,7 +94,7 @@ public class InternalStorage {
      * Reads data from file
      *
      * @param context Context
-     * @return ArrayList<NotifiBugEventRequest>
+     * @return ArrayList
      */
     private ArrayList<NotifiBugEventRequest> readObject(Context context) {
         try {

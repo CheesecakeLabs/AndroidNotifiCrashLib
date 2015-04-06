@@ -11,14 +11,15 @@ import io.ckl.notifibug.NotifiBug;
 
 public class MainActivity extends ActionBarActivity {
 
-    private static final String CHEESEBUG_SERIAL_NUMBER = "a412216f8572e23afe56435681b146";
+    private static final String NOTIFIBUG_SERIAL_NUMBER = "PUT_YOUR_SERIAL_HERE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
-        NotifiBug.init(this.getApplicationContext(), CHEESEBUG_SERIAL_NUMBER);
+
+        // Initializing NotifiBug library
+        NotifiBug.init(this.getApplicationContext(), NOTIFIBUG_SERIAL_NUMBER);
         
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()

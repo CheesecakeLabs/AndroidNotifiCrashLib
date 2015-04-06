@@ -106,9 +106,9 @@ public class NotifiBug {
 
         UncaughtExceptionHandler currentHandler = Thread.getDefaultUncaughtExceptionHandler();
         if (currentHandler != null) {
-            Log.e(Config.TAG, "current handler class=" + currentHandler.getClass().getName());
+            Log.d(Config.TAG, "current handler class=" + currentHandler.getClass().getName());
         }
-        Log.e(Config.TAG, "setupUncaughtExceptionHandler");
+        Log.d(Config.TAG, "setupUncaughtExceptionHandler");
 
         // don't register again if already registered
         if (!(currentHandler instanceof NotifiBugExceptionHandler)) {

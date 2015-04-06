@@ -3,6 +3,8 @@ package io.ckl.notifibug.tasks;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.squareup.okhttp.Response;
+
 import java.io.IOException;
 
 import io.ckl.notifibug.Config;
@@ -23,14 +25,18 @@ public class SendEventsTask extends AsyncTask<Void, Void, Void> {
 
         Log.e(Config.TAG, eventRequest.getRequestData());
         boolean sendSuccessful = false;
+        Response response = null;
+
         try {
-            Log.d(Config.TAG, "NotifiCrash trying to post data " + eventRequest.getRequestData());
-            sendSuccessful = NotifiBug.tryCrashPost(eventRequest.getRequestData()).isSuccessful();
+            Log.i(Config.TAG, "NotifiCrash trying to post data: " + eventRequest.getRequestData());
+            response = NotifiBug.tryCrashPost(eventRequest.getRequestData());
+            sendSuccessful = response.isSuccessful();
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d(Config.TAG, "NotifiCrash sending failed");
+            Log.e(Config.TAG, "NotifiCrash response message: " + response.message());
         } finally {
-            Log.d(Config.TAG, "NotifiCrash post to server successful " + String.valueOf(sendSuccessful).toUpperCase());
+            Log.i(Config.TAG, "NotifiCrash response message: " + response.message());
+            Log.i(Config.TAG, "NotifiCrash post to server successful " + String.valueOf(sendSuccessful).toUpperCase());
         }
 
         if (sendSuccessful) {

@@ -25,10 +25,10 @@ public class NotifiBugEventBuilder implements Serializable {
     private static final String CRASH_CLASS = "class_name";
     private static final String CRASH_LINE = "line_number";
     private static final String CRASH_METHOD = "method_name";
+    private static final String CRASH_STACKTRACE = "stack_trace";
 
     private static final String CRASH_MESSAGE = "crash_message";
     private static final String CRASH_LEVEL = "crash_level";
-    private static final String CRASH_STACKTRACE = "stack_trace";
 
     private static final String APP_SERIAL_NUMBER = "serial_number";
 
@@ -239,6 +239,7 @@ public class NotifiBugEventBuilder implements Serializable {
             crash.put(CRASH_CLASS, NotifiBug.getCrashClassName(t));
             crash.put(CRASH_CLASS, NotifiBug.getCrashClassName(t));
             crash.put(CRASH_TIMESTAMP, sdf.format(new Date(System.currentTimeMillis())));
+            crash.put(CRASH_STACKTRACE, NotifiBug.getStackTrace(t));
         } catch (JSONException e) {
             e.printStackTrace();
         }
