@@ -1,9 +1,15 @@
 # NotifiBug Library for Android
 
-It does what every bug client needs to do but little earlier
+It does what every bug client needs to do but little earlier and in a smarter way
+
+## How to use it
 
 Below is an example of how to register NotifiBug library to handle uncaught exceptions of you app and send 
 crash reports to NotifiCrash service.
+
+### Permissions in manifest
+
+The `AndroidManifest.xml` requires the permission `android.permission.INTERNET` and would like the permission `android.permission.ACCESS_NETWORK_STATE` even though optional.
 
 ```xml
 <!-- REQUIRED to send captures to NotifiCrash service -->
@@ -12,6 +18,8 @@ crash reports to NotifiCrash service.
 <!-- OPTIONAL but makes NotifiBug smarter -->
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
+
+### Init library in your project
 
 ``` java
 public class MainActivity extends Activity {
@@ -21,7 +29,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		// Sentry will look for uncaught exceptions from previous runs and send them
+		// NotifiBug will look for uncaught exceptions from previous runs and send them
 		NotifiBug.init(this.getApplicationContext(), "YOUR_SERIAL_NUMBER");
 
 	}
@@ -29,32 +37,14 @@ public class MainActivity extends Activity {
 }
 ```
 
-### Updates
-
-Version | Changes
---- | ---
-**0.1.0** | Initial pre-release
-
-## This Is How We Do It
-
-### Permissions in manifest
-
-The AndroidManifest.xml requires the permission `android.permission.INTERNET` and would like the permission `android.permission.ACCESS_NETWORK_STATE` even though optional.
-
-```xml
-<!-- REQUIRED to send captures to NotifiCrash service -->
-<uses-permission android:name="android.permission.INTERNET" />
-
-<!-- OPTIONAL but makes NotifiBug smarter -->
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-```
-
 ### Capture a message
+
 ``` java
     NotifiBug.captureMessage("Something significant may have happened");
 ```
 
 ### Set a listener to intercept the NotifiBugEventBuilder before each capture
+
 ``` java
 // CALL THIS BEFORE CALLING NotifiBug.init()
 // Sets a listener to intercept the NotifiBugEventBuilder before
@@ -81,14 +71,16 @@ NotifiBug.setCaptureListener(new NotifiBugEventCaptureListener() {
 
 ```
 
-## Edited for NotifiCrash
+## Authors and Contributors
 
-by Marko Arsić (@marsicdev)
-
-## Credits
+Edited for NotifiCrash by Marko Arsic (@marsicdev)
 
 This is refactored and optimised [Sentry for Android](https://github.com/joshdholtz/Sentry-Android) library.
 Credits for most of the code goes to @joshdholtz
+
+## Support or Contact
+
+Having trouble with NotifiBug? Check out the [javadocs]() or contact marko@ckl.io and we’ll help you out.
 
 ## License
 
