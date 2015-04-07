@@ -1,8 +1,18 @@
 # NotifiBug Library for Android
 
-[ ![Download](https://api.bintray.com/packages/cheesecakelabs/maven/NotifiBug/images/download.svg) ](https://bintray.com/cheesecakelabs/maven/NotifiBug/_latestVersion)
-
+[![Download](https://api.bintray.com/packages/cheesecakelabs/maven/notifibug/images/download.svg)](https://bintray.com/cheesecakelabs/maven/notifibug/_latestVersion)
+[![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://www.opensource.org/licenses/MIT)
 It does what every bug client needs to do but little earlier and in a smarter way
+
+## Setup
+
+Releases are published to [bintray jcenter](https://bintray.com/bintray/jcenter) (package appear immediately after release)
+
+Gradle:
+
+```groovy
+compile 'io.ckl.notifibug:notifibug:0.1.0-snapshot'
+```
 
 ## How to use it
 
