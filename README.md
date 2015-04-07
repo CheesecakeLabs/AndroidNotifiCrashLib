@@ -2,6 +2,7 @@
 
 [![Download](https://api.bintray.com/packages/cheesecakelabs/maven/notifibug/images/download.svg)](https://bintray.com/cheesecakelabs/maven/notifibug/_latestVersion)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://www.opensource.org/licenses/MIT)
+
 It does what every bug client needs to do but little earlier and in a smarter way
 
 ## Setup
