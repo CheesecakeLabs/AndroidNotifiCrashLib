@@ -171,7 +171,7 @@ public class NotifiBugEventBuilder implements Serializable {
     }
 
     /**
-     * @param tags Map<String, String>
+     * @param tags Map
      * @return NotifiBugEventBuilder
      */
     public NotifiBugEventBuilder setTags(Map<String, String> tags) {
@@ -200,7 +200,7 @@ public class NotifiBugEventBuilder implements Serializable {
     }
 
     /**
-     * @param extra Map<String, String>
+     * @param extra Map
      * @return NotifiBugEventBuilder
      */
     public NotifiBugEventBuilder setExtra(Map<String, String> extra) {

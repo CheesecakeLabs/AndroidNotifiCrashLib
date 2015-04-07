@@ -1,5 +1,7 @@
 # NotifiBug Library for Android
 
+[ ![Download](https://api.bintray.com/packages/cheesecakelabs/maven/NotifiBug/images/download.svg) ](https://bintray.com/cheesecakelabs/maven/NotifiBug/_latestVersion)
+
 It does what every bug client needs to do but little earlier and in a smarter way
 
 ## How to use it

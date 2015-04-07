@@ -1,9 +1,14 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+// This is the library version used when deploying the artifact
+version = VERSION_NAME
 
 android {
 
     compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    buildToolsVersion '22.0.1'
 
     defaultConfig {
 
@@ -11,7 +16,7 @@ android {
         targetSdkVersion 22
 
         versionCode VERSION_CODE as int
-        versionName VERSION_CODE
+        versionName VERSION_NAME
     }
 
     buildTypes {
@@ -27,14 +32,63 @@ android {
         }
     }
 
-    lintOptions {
-        checkReleaseBuilds true
-        abortOnError true
-        disable 'InvalidPackage'
-    }
+}
 
-    aaptOptions {
-        noCompress 'apk'
+def siteUrl = 'http://cheesecakelabs.github.io/AndroidNotifiBug'      // Homepage URL of the library
+def gitUrl = 'https://github.com/CheesecakeLabs/AndroidNotifiBug.git'   // Git repository URL
+group = 'io.ckl.notifibug'                                        // Maven Group ID for the artifact
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = "notifibug"
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["MIT"]
+        publish = true
+    }
+}
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+
+                // Add your description here
+                name 'NotifiBug Library for Android'
+                url siteUrl
+
+                // Set your license
+                licenses {
+                    license {
+                        name 'The MIT License (MIT)'
+                        url 'https://github.com/CheesecakeLabs/AndroidNotifiBug/blob/master/LICENSE'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'cheesecakelabs'
+                        name 'Cheesecake Labs'
+                        email 'developer@ckl.io'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+
+                }
+            }
+        }
     }
 }
 
@@ -43,4 +97,26 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.0.0'
 
     compile 'com.squareup.okhttp:okhttp:2.3.0'
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    exclude "com.squareup.okhttp.*"
+    destinationDir = file("../javadoc")
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
 }
