@@ -12,7 +12,7 @@ Releases are published to [bintray jcenter](https://bintray.com/bintray/jcenter)
 Gradle:
 
 ```groovy
-compile 'io.ckl.notifibug:notifibug:0.1.0-snapshot'
+compile 'io.ckl.notifibug:notifibug:0.2.0-snapshot'
 ```
 
 ## How to use it
@@ -35,19 +35,29 @@ The `AndroidManifest.xml` requires the permission `android.permission.INTERNET` 
 ### Init library in your project
 
 ``` java
-public class MainActivity extends Activity {
+public class MyApplication extends Application {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
 
 		// NotifiBug will look for uncaught exceptions from previous runs and send them
-		NotifiBug.init(this.getApplicationContext(), "YOUR_SERIAL_NUMBER");
+		NotifiBug.init(this, "YOUR_SERIAL_NUMBER");
 
 	}
 
 }
+```
+
+### Enable debug
+
+To enable logcat output in console add `setDebug(true)` just before `init`
+
+```java
+	// Enable debug output
+	NotifiBug.setDebug(true);
+	// NotifiBug init
+	NotifiBug.init(this, "YOUR_SERIAL_NUMBER");
 ```
 
 ### Capture a message
