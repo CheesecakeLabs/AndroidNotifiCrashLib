@@ -1,7 +1,6 @@
 package io.ckl.notifibug.data;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -14,12 +13,14 @@ import java.util.ArrayList;
 
 import io.ckl.notifibug.Config;
 import io.ckl.notifibug.NotifiBug;
-import io.ckl.notifibug.events.NotifiBugEventRequest;
+import io.ckl.notifibug.events.EventRequest;
+
+import static io.ckl.notifibug.helpers.LogHelper.i;
 
 public class InternalStorage {
 
     private final static String FILE_NAME = Config.STORAGE_UNSENT_REPORTS_FILE;
-    private ArrayList<NotifiBugEventRequest> unsentRequests;
+    private ArrayList<EventRequest> mUnsentEvents;
 
     public static InternalStorage getInstance() {
         return LazyHolder.instance;
@@ -30,7 +31,7 @@ public class InternalStorage {
     }
 
     private InternalStorage() {
-        this.unsentRequests = this.readObject(NotifiBug.getInstance().getContext());
+        mUnsentEvents = this.readObject(NotifiBug.getInstance().getContext());
     }
 
     /**
@@ -38,21 +39,21 @@ public class InternalStorage {
      *
      * @return ArrayList
      */
-    public ArrayList<NotifiBugEventRequest> getUnsentRequests() {
-        return unsentRequests;
+    public ArrayList<EventRequest> getUnsentEvents() {
+        return mUnsentEvents;
     }
 
     /**
-     * Adding unsent request to list of unsent requests
+     * Adding unsent events to list of unsent requests
      *
-     * @param request NotifiBugEventRequest
+     * @param eventRequest EventRequest
      */
-    public void addRequest(NotifiBugEventRequest request) {
+    public void storeUnsentEvent(EventRequest eventRequest) {
         synchronized (this) {
-            Log.i(Config.TAG, "Adding request - " + request.getUuid());
-            if (!this.unsentRequests.contains(request)) {
-                this.unsentRequests.add(request);
-                this.writeObject(NotifiBug.getInstance().getContext(), getUnsentRequests());
+            i("Storing unsent event - " + eventRequest.getUuid());
+            if (!this.mUnsentEvents.contains(eventRequest)) {
+                this.mUnsentEvents.add(eventRequest);
+                this.writeObject(NotifiBug.getInstance().getContext(), getUnsentEvents());
             }
         }
     }
@@ -60,23 +61,23 @@ public class InternalStorage {
     /**
      * Removing request from unsent requests list
      *
-     * @param request NotifiBugEventRequest
+     * @param eventRequest EventRequest
      */
-    public void removeBuilder(NotifiBugEventRequest request) {
+    public void removeSentEvent(EventRequest eventRequest) {
         synchronized (this) {
-            Log.i(Config.TAG, "Removing request - " + request.getUuid());
-            this.unsentRequests.remove(request);
-            this.writeObject(NotifiBug.getInstance().getContext(), getUnsentRequests());
+            i("Removing sent event - " + eventRequest.getUuid());
+            this.mUnsentEvents.remove(eventRequest);
+            this.writeObject(NotifiBug.getInstance().getContext(), getUnsentEvents());
         }
     }
 
     /**
-     * Writes list of request to file
+     * Writes list of recorded events to file
      *
-     * @param context Context
-     * @param requests NotifiBugEventRequest
+     * @param context  Context
+     * @param requests EventRequest
      */
-    private void writeObject(Context context, ArrayList<NotifiBugEventRequest> requests) {
+    private void writeObject(Context context, ArrayList<EventRequest> requests) {
         try {
             FileOutputStream fos = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -91,17 +92,17 @@ public class InternalStorage {
     }
 
     /**
-     * Reads data from file
+     * Reads events data from file
      *
      * @param context Context
      * @return ArrayList
      */
-    private ArrayList<NotifiBugEventRequest> readObject(Context context) {
+    private ArrayList<EventRequest> readObject(Context context) {
         try {
             FileInputStream fis = context.openFileInput(FILE_NAME);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            
-            return (ArrayList<NotifiBugEventRequest>) ois.readObject();
+
+            return (ArrayList<EventRequest>) ois.readObject();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (StreamCorruptedException e) {
