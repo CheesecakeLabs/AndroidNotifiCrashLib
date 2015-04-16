@@ -13,10 +13,10 @@ import io.ckl.crash.app.R;
 
 public class MainFragment extends Fragment {
 
+    private TextView someTv;
+
     public MainFragment() {
     }
-
-    TextView someTv;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,14 +37,14 @@ public class MainFragment extends Fragment {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                someTv.setText("Proba");
+                someTv.setText("Hello world");
             }
         });
 
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                throw new RuntimeException("Tudo bom? Blz?");
+                throw new RuntimeException("Custom RuntimeException");
             }
         });
 
@@ -58,7 +58,7 @@ public class MainFragment extends Fragment {
         b4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                throw new ClassCastException("ClassCastException!");
+                throw new ClassCastException("Custom ClassCastException!");
             }
         });
 
