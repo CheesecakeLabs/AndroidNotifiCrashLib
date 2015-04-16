@@ -3,11 +3,6 @@ package io.ckl.notifibug.helpers;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-/**
- * Created by marko.
- * Project: AndroidNotifiBug
- * Package: io.ckl.notifibug.helpers
- */
 public class CrashHelper {
 
     private static final int NO_LINE_NUMBER = -1;

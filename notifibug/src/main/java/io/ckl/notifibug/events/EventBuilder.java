@@ -30,10 +30,10 @@ public class EventBuilder implements Serializable {
 
     private static final String APP_SERIAL_NUMBER = "application";
 
-    private final static SimpleDateFormat sdf = new SimpleDateFormat(TIMESTAMP_FORMAT, Locale.getDefault());
+    private final static SimpleDateFormat dateFormat = new SimpleDateFormat(TIMESTAMP_FORMAT, Locale.getDefault());
 
     static {
-        sdf.setTimeZone(TimeZone.getDefault());
+        dateFormat.setTimeZone(TimeZone.getDefault());
     }
 
     private Map<String, Object> mEvent;
@@ -84,7 +84,7 @@ public class EventBuilder implements Serializable {
      * @return EventBuilder
      */
     public EventBuilder setTimestamp(long timestamp) {
-        mEvent.put(CRASH_TIMESTAMP, sdf.format(new Date(timestamp)));
+        mEvent.put(CRASH_TIMESTAMP, dateFormat.format(new Date(timestamp)));
         return this;
     }
 
