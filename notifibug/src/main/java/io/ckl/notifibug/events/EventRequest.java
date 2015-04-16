@@ -5,20 +5,21 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class NotifiBugEventRequest implements Serializable {
-    private String requestData;
+public class EventRequest implements Serializable {
+
+    private String mEventData;
     private UUID uuid;
 
-    public NotifiBugEventRequest(NotifiBugEventBuilder builder) {
-        this.requestData = new JSONObject(builder.event).toString();
-        this.uuid = UUID.randomUUID();
+    public EventRequest(EventBuilder builder) {
+        mEventData = new JSONObject(builder.getEvent()).toString();
+        uuid = UUID.randomUUID();
     }
 
     /**
      * @return String
      */
-    public String getRequestData() {
-        return requestData;
+    public String getEventData() {
+        return mEventData;
     }
 
     /**
@@ -30,7 +31,7 @@ public class NotifiBugEventRequest implements Serializable {
 
     @Override
     public boolean equals(Object other) {
-        NotifiBugEventRequest otherRequest = (NotifiBugEventRequest) other;
+        EventRequest otherRequest = (EventRequest) other;
 
         if (this.uuid != null && otherRequest.uuid != null) {
             return uuid.equals(otherRequest.uuid);

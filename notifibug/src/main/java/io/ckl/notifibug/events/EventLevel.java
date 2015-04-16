@@ -1,6 +1,6 @@
 package io.ckl.notifibug.events;
 
-public enum NotifiBugEventLevel {
+public enum EventLevel {
 
     FATAL("fatal"),
     ERROR("error"),
@@ -10,7 +10,7 @@ public enum NotifiBugEventLevel {
 
     private String value;
 
-    NotifiBugEventLevel(String value) {
+    EventLevel(String value) {
         this.value = value;
     }
 
