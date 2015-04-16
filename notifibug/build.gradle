@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-def getVersionCode() {
+def mVersionCode() {
     return System.getenv("BUILD_NUMBER") as Integer ?: VERSION_CODE as Integer
 }
 
@@ -16,7 +16,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
 
-        versionCode getVersionCode()
+        versionCode mVersionCode()
         versionName VERSION_NAME
     }
 
