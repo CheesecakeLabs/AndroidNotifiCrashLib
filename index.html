@@ -34,7 +34,7 @@
 
 <p>Gradle:</p>
 
-<div class="highlight highlight-groovy"><pre>compile <span class="pl-s"><span class="pl-pds">'</span>io.ckl.notifibug:notifibug:0.1.0-snapshot<span class="pl-pds">'</span></span></pre></div>
+<div class="highlight highlight-groovy"><pre>compile <span class="pl-s"><span class="pl-pds">'</span>io.ckl.notifibug:notifibug:0.2.0-snapshot<span class="pl-pds">'</span></span></pre></div>
 
 <h2>
 <a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use it</h2>
@@ -56,19 +56,28 @@ crash reports to NotifiCrash service.</p>
 <h3>
 <a id="init-library-in-your-project" class="anchor" href="#init-library-in-your-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>Init library in your project</h3>
 
-<div class="highlight highlight-java"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MainActivity</span> <span class="pl-k">extends</span> <span class="pl-e">Activity</span> {
+<div class="highlight highlight-java"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MyApplication</span> <span class="pl-k">extends</span> <span class="pl-e">Application</span> {
 
     <span class="pl-k">@Override</span>
     <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">onCreate</span>(<span class="pl-smi">Bundle</span> <span class="pl-v">savedInstanceState</span>) {
         <span class="pl-v">super</span><span class="pl-k">.</span>onCreate(savedInstanceState);
-        setContentView(<span class="pl-smi">R</span><span class="pl-k">.</span>layout<span class="pl-k">.</span>activity_main);
 
         <span class="pl-c">// NotifiBug will look for uncaught exceptions from previous runs and send them</span>
-        <span class="pl-smi">NotifiBug</span><span class="pl-k">.</span>init(<span class="pl-v">this</span><span class="pl-k">.</span>getApplicationContext(), <span class="pl-s"><span class="pl-pds">"</span>YOUR_SERIAL_NUMBER<span class="pl-pds">"</span></span>);
+        <span class="pl-smi">NotifiBug</span><span class="pl-k">.</span>init(<span class="pl-v">this</span>, <span class="pl-s"><span class="pl-pds">"</span>YOUR_SERIAL_NUMBER<span class="pl-pds">"</span></span>);
 
     }
 
 }</pre></div>
+
+<h3>
+<a id="enable-debug" class="anchor" href="#enable-debug" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enable debug</h3>
+
+<p>To enable logcat output in console add <code>setDebug(true)</code> just before <code>init</code></p>
+
+<div class="highlight highlight-java"><pre>    <span class="pl-c">// Enable debug output</span>
+    <span class="pl-smi">NotifiBug</span><span class="pl-k">.</span>setDebug(<span class="pl-c1">true</span>);
+    <span class="pl-c">// NotifiBug init</span>
+    <span class="pl-smi">NotifiBug</span><span class="pl-k">.</span>init(<span class="pl-v">this</span>, <span class="pl-s"><span class="pl-pds">"</span>YOUR_SERIAL_NUMBER<span class="pl-pds">"</span></span>);</pre></div>
 
 <h3>
 <a id="capture-a-message" class="anchor" href="#capture-a-message" aria-hidden="true"><span class="octicon octicon-link"></span></a>Capture a message</h3>
