@@ -7,12 +7,12 @@ It does what every bug client needs to do but little earlier and in a smarter wa
 
 ## Setup
 
-Releases are published to [bintray jcenter](https://bintray.com/bintray/jcenter) (package appear immediately after release)
+Releases are published to [bintray jcenter](https://bintray.com/bintray/jcenter) ([package](https://bintray.com/cheesecakelabs/maven/notifibug/view) appears immediately after release)
 
 Gradle:
 
 ```groovy
-compile 'io.ckl.notifibug:notifibug:0.2.0-snapshot'
+compile 'io.ckl.notifibug:notifibug:0.3.0-snapshot'
 ```
 
 ## How to use it
@@ -54,44 +54,33 @@ public class MyApplication extends Application {
 To enable logcat output in console add `setDebug(true)` just before `init`
 
 ```java
-	// Enable debug output
+	// Enable debug output (optional)
 	NotifiBug.setDebug(true);
 	// NotifiBug init
 	NotifiBug.init(this, "YOUR_SERIAL_NUMBER");
 ```
 
-### Capture a message
+### Others crash capture libraries
 
-``` java
-    NotifiBug.captureMessage("Something significant may have happened");
-```
+If you are using other bug capturing libraries make sure that you init NotifiBug last.
 
-### Set a listener to intercept the NotifiBugEventBuilder before each capture
-
-``` java
-// CALL THIS BEFORE CALLING NotifiBug.init()
-// Sets a listener to intercept the NotifiBugEventBuilder before
-// each capture to set values that could change state
-NotifiBug.setCaptureListener(new NotifiBugEventCaptureListener() {
+```java
+public class MyApplication extends Application {
 
 	@Override
-	public NotifiBugEventBuilder beforeCapture(NotifiBugEventBuilder builder) {
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+		// Other crash libraries
+		initFlurry();
+		initParse();
 
-		// Needs permission - <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-		ConnectivityManager connManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-		NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+		// Make sure that NotifiBug is initialised last
+		NotifiBug.init(this, "YOUR_SERIAL_NUMBER");
 
-		// Sets extra key if wifi is connected
-		try {
-			builder.getExtra().put("wifi", String.valueOf(mWifi.isConnected()));
-			builder.getTags().put("tag_1", "value_1");
-		} catch (JSONException e) {}
-
-		return builder;
 	}
 
-});
-
+}
 ```
 
 ## Authors and Contributors
@@ -103,7 +92,7 @@ Credits for most of the code goes to @joshdholtz
 
 ## Support or Contact
 
-Having trouble with NotifiBug? Check out the [javadocs]() or contact marko@ckl.io and we’ll help you out.
+Having trouble with NotifiBug? Check out the [javadocs](http://cheesecakelabs.github.io/AndroidNotifiBug/javadoc) or contact developer@ckl.io and we’ll help you out.
 
 ## License
 

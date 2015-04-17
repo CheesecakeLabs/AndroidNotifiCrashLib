@@ -19,3 +19,18 @@ allprojects {
         jcenter()
     }
 }
+
+// Disabling pre-dexing to improve build server performance
+// Since there will not be any incremental builds, it is really not needed.
+// See http://tools.android.com/tech-docs/new-build-system/tips
+project.ext.preDexLibs = !project.hasProperty('disablePreDex')
+
+subprojects {
+    project.plugins.whenPluginAdded { plugin ->
+        if ("com.android.build.gradle.AppPlugin".equals(plugin.class.name)) {
+            project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
+        } else if ("com.android.build.gradle.LibraryPlugin".equals(plugin.class.name)) {
+            project.android.dexOptions.preDexLibraries = rootProject.ext.preDexLibs
+        }
+    }
+}
