@@ -2,7 +2,6 @@
 .gradle/
 build/
 crash-app/
-notifibug/
 
 local.properties
 
