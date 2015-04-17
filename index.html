@@ -30,11 +30,11 @@
 <h2>
 <a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h2>
 
-<p>Releases are published to <a href="https://bintray.com/bintray/jcenter">bintray jcenter</a> (package appear immediately after release)</p>
+<p>Releases are published to <a href="https://bintray.com/bintray/jcenter">bintray jcenter</a> (<a href="https://bintray.com/cheesecakelabs/maven/notifibug/view">package</a> appears immediately after release)</p>
 
 <p>Gradle:</p>
 
-<div class="highlight highlight-groovy"><pre>compile <span class="pl-s"><span class="pl-pds">'</span>io.ckl.notifibug:notifibug:0.2.0-snapshot<span class="pl-pds">'</span></span></pre></div>
+<div class="highlight highlight-groovy"><pre>compile <span class="pl-s"><span class="pl-pds">'</span>io.ckl.notifibug:notifibug:0.3.0-snapshot<span class="pl-pds">'</span></span></pre></div>
 
 <h2>
 <a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use it</h2>
@@ -74,42 +74,32 @@ crash reports to NotifiCrash service.</p>
 
 <p>To enable logcat output in console add <code>setDebug(true)</code> just before <code>init</code></p>
 
-<div class="highlight highlight-java"><pre>    <span class="pl-c">// Enable debug output</span>
+<div class="highlight highlight-java"><pre>    <span class="pl-c">// Enable debug output (optional)</span>
     <span class="pl-smi">NotifiBug</span><span class="pl-k">.</span>setDebug(<span class="pl-c1">true</span>);
     <span class="pl-c">// NotifiBug init</span>
     <span class="pl-smi">NotifiBug</span><span class="pl-k">.</span>init(<span class="pl-v">this</span>, <span class="pl-s"><span class="pl-pds">"</span>YOUR_SERIAL_NUMBER<span class="pl-pds">"</span></span>);</pre></div>
 
 <h3>
-<a id="capture-a-message" class="anchor" href="#capture-a-message" aria-hidden="true"><span class="octicon octicon-link"></span></a>Capture a message</h3>
+<a id="others-crash-capture-libraries" class="anchor" href="#others-crash-capture-libraries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Others crash capture libraries</h3>
 
-<div class="highlight highlight-java"><pre>    <span class="pl-smi">NotifiBug</span><span class="pl-k">.</span>captureMessage(<span class="pl-s"><span class="pl-pds">"</span>Something significant may have happened<span class="pl-pds">"</span></span>);</pre></div>
+<p>If you are using other bug capturing libraries make sure that you init NotifiBug last.</p>
 
-<h3>
-<a id="set-a-listener-to-intercept-the-notifibugeventbuilder-before-each-capture" class="anchor" href="#set-a-listener-to-intercept-the-notifibugeventbuilder-before-each-capture" aria-hidden="true"><span class="octicon octicon-link"></span></a>Set a listener to intercept the NotifiBugEventBuilder before each capture</h3>
-
-<div class="highlight highlight-java"><pre><span class="pl-c">// CALL THIS BEFORE CALLING NotifiBug.init()</span>
-<span class="pl-c">// Sets a listener to intercept the NotifiBugEventBuilder before</span>
-<span class="pl-c">// each capture to set values that could change state</span>
-<span class="pl-smi">NotifiBug</span><span class="pl-k">.</span>setCaptureListener(<span class="pl-k">new</span> <span class="pl-smi">NotifiBugEventCaptureListener</span>() {
+<div class="highlight highlight-java"><pre><span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">MyApplication</span> <span class="pl-k">extends</span> <span class="pl-e">Application</span> {
 
     <span class="pl-k">@Override</span>
-    <span class="pl-k">public</span> <span class="pl-smi">NotifiBugEventBuilder</span> <span class="pl-en">beforeCapture</span>(<span class="pl-smi">NotifiBugEventBuilder</span> <span class="pl-v">builder</span>) {
+    <span class="pl-k">public</span> <span class="pl-k">void</span> <span class="pl-en">onCreate</span>(<span class="pl-smi">Bundle</span> <span class="pl-v">savedInstanceState</span>) {
+        <span class="pl-v">super</span><span class="pl-k">.</span>onCreate(savedInstanceState);
 
-        <span class="pl-c">// Needs permission - &lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /&gt;</span>
-        <span class="pl-smi">ConnectivityManager</span> connManager <span class="pl-k">=</span> (<span class="pl-smi">ConnectivityManager</span>) getSystemService(<span class="pl-c1">CONNECTIVITY_SERVICE</span>);
-        <span class="pl-smi">NetworkInfo</span> mWifi <span class="pl-k">=</span> connManager<span class="pl-k">.</span>getNetworkInfo(<span class="pl-smi">ConnectivityManager</span><span class="pl-c1"><span class="pl-k">.</span>TYPE_WIFI</span>);
+        <span class="pl-c">// Other crash libraries</span>
+        initFlurry();
+        initParse();
 
-        <span class="pl-c">// Sets extra key if wifi is connected</span>
-        <span class="pl-k">try</span> {
-            builder<span class="pl-k">.</span>getExtra()<span class="pl-k">.</span>put(<span class="pl-s"><span class="pl-pds">"</span>wifi<span class="pl-pds">"</span></span>, <span class="pl-smi">String</span><span class="pl-k">.</span>valueOf(mWifi<span class="pl-k">.</span>isConnected()));
-            builder<span class="pl-k">.</span>getTags()<span class="pl-k">.</span>put(<span class="pl-s"><span class="pl-pds">"</span>tag_1<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>value_1<span class="pl-pds">"</span></span>);
-        } <span class="pl-k">catch</span> (<span class="pl-smi">JSONException</span> e) {}
+        <span class="pl-c">// Make sure that NotifiBug is initialised last</span>
+        <span class="pl-smi">NotifiBug</span><span class="pl-k">.</span>init(<span class="pl-v">this</span>, <span class="pl-s"><span class="pl-pds">"</span>YOUR_SERIAL_NUMBER<span class="pl-pds">"</span></span>);
 
-        <span class="pl-k">return</span> builder;
     }
 
-});
-</pre></div>
+}</pre></div>
 
 <h2>
 <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h2>
@@ -122,7 +112,7 @@ Credits for most of the code goes to <a href="https://github.com/joshdholtz" cla
 <h2>
 <a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h2>
 
-<p>Having trouble with NotifiBug? Check out the <a href="">javadocs</a> or contact <a href="mailto:marko@ckl.io">marko@ckl.io</a> and we’ll help you out.</p>
+<p>Having trouble with NotifiBug? Check out the <a href="http://cheesecakelabs.github.io/AndroidNotifiBug/javadoc">javadocs</a> or contact <a href="mailto:developer@ckl.io">developer@ckl.io</a> and we’ll help you out.</p>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
