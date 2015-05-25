@@ -20,6 +20,9 @@ public class EventBuilder implements Serializable {
     private static final String CRASH_NAME = "name";
     private static final String CRASH_TIMESTAMP = "time";
     private static final String CRASH_REASON = "reason";
+    private static final String CRASH_APP_VERSION = "app_version";
+    private static final String CRASH_OS_VERSION = "os_version";
+    private static final String CRASH_DEVICE_MODEL = "device_model";
     private static final String CRASH_CLASS = "class_name";
     private static final String CRASH_LINE = "line_number";
     private static final String CRASH_METHOD = "method_name";
@@ -46,6 +49,11 @@ public class EventBuilder implements Serializable {
 
     public EventBuilder(Throwable throwable) {
         this();
+
+        this.setDeviceInfo();
+        this.setAppVersion();
+        this.setAndroidVersion();
+
         this.setName(CrashHelper.findName(throwable));
         this.setReason(CrashHelper.findReason(throwable));
         this.setTimestamp(CrashHelper.findTime());
@@ -151,6 +159,36 @@ public class EventBuilder implements Serializable {
      */
     public EventBuilder setStacktrace(String stacktrace) {
         mEvent.put(CRASH_STACKTRACE, stacktrace);
+        return this;
+    }
+
+    /**
+     * "device_model": "Full stacktrace"
+     *
+     * @return EventBuilder
+     */
+    public EventBuilder setDeviceInfo() {
+        mEvent.put(CRASH_DEVICE_MODEL, NotifiBug.getInstance().getDeviceInfo());
+        return this;
+    }
+
+    /**
+     * "app_version": "1.1"
+     *
+     * @return EventBuilder
+     */
+    public EventBuilder setAppVersion() {
+        mEvent.put(CRASH_APP_VERSION, NotifiBug.getInstance().getAppVersion());
+        return this;
+    }
+
+    /**
+     * "os_version": "Android 4.4"
+     *
+     * @return EventBuilder
+     */
+    public EventBuilder setAndroidVersion() {
+        mEvent.put(CRASH_OS_VERSION, NotifiBug.getInstance().getAndroidVersion());
         return this;
     }
 

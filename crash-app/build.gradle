@@ -11,7 +11,7 @@ android {
         targetSdkVersion 22
 
         versionCode VERSION_CODE as int
-        versionName VERSION_CODE
+        versionName VERSION_NAME
     }
 
     buildTypes {

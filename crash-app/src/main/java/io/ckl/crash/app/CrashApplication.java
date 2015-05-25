@@ -7,7 +7,7 @@ import io.ckl.notifibug.NotifiBug;
 public class CrashApplication extends Application {
 
 
-    private static final String NOTIFIBUG_SERIAL_NUMBER = "1255f5292a006c4c3bc50ffe428339";
+    private static final String NOTIFIBUG_SERIAL_NUMBER = "PUT_YOUR_NOTIFIBUG_SERIAL_HERE";
 
     @Override
     public void onCreate() {

@@ -1,9 +1,11 @@
 package io.ckl.notifibug;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -241,6 +243,40 @@ public class NotifiBug {
         }
         return cause;
     }
+
+    /**
+     * @return Application version name string
+     */
+    public String getAppVersion() {
+        String appVersionString;
+        try {
+            PackageInfo packageInfo = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
+            appVersionString = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            appVersionString = "unknown";
+            e.printStackTrace();
+        }
+
+        return appVersionString;
+    }
+
+    /**
+     * @return Information about device
+     */
+    public String getDeviceInfo() {
+        String manufacturer = Build.MANUFACTURER.toUpperCase();
+        String model = Build.MODEL.toUpperCase();
+
+        return String.format("%s - %s", manufacturer, model);
+    }
+
+    /**
+     * @return Android sdk version
+     */
+    public String getAndroidVersion() {
+        return String.format("Android %s (%s)", Build.VERSION.RELEASE, Build.VERSION.CODENAME);
+    }
+
 
     /**
      * @param context The current Context or Activity that this method is called from
