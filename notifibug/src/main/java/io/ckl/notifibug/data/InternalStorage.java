@@ -84,7 +84,7 @@ public class InternalStorage {
             oos.writeObject(requests);
             oos.close();
             fos.close();
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException | NullPointerException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
