@@ -1,18 +1,18 @@
 # NotifiCrash Library for Android
 
-[![Download](https://api.bintray.com/packages/cheesecakelabs/maven/notifibug/images/download.svg)](https://bintray.com/cheesecakelabs/maven/notifibug/_latestVersion)
+[![Download](https://api.bintray.com/packages/cheesecakelabs/maven/notificrash/images/download.svg)](https://bintray.com/cheesecakelabs/maven/notificrash/_latestVersion)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://www.opensource.org/licenses/MIT)
 
 It does what every bug client needs to do but little earlier and in a smarter way
 
 ## Setup
 
-Releases are published to [bintray jcenter](https://bintray.com/bintray/jcenter) ([package](https://bintray.com/cheesecakelabs/maven/notifibug/view) appears immediately after release)
+Releases are published to [bintray jcenter](https://bintray.com/bintray/jcenter) ([package](https://bintray.com/cheesecakelabs/maven/notificrash/view) appears immediately after release)
 
 Gradle:
 
 ```groovy
-compile 'io.ckl.notifibug:notifibug:0.3.0-snapshot'
+compile 'io.ckl.notificrash:notificrash:0.4.0'
 ```
 
 ## How to use it
@@ -92,8 +92,8 @@ Credits for most of the code goes to @joshdholtz
 
 ## Support or Contact
 
-Having trouble with NotifiCrash? Check out the [javadocs](http://cheesecakelabs.github.io/AndroidNotifiCrash/javadoc) or contact developer@ckl.io and we’ll help you out.
+Having trouble with NotifiCrash? Check out the [javadocs](http://cheesecakelabs.github.io/AndroidNotifiCrashLib/javadoc) or contact developer@ckl.io and we’ll help you out.
 
 ## License
 
-NotifiCrash is available under the MIT license. See the [LICENSE](https://github.com/CheesecakeLabs/AndroidNotifiCrash/blob/master/LICENSE) file for more info.
+NotifiCrash is available under the MIT license. See the [LICENSE](https://github.com/CheesecakeLabs/AndroidNotifiCrashLib/blob/master/LICENSE) file for more info.
