@@ -7,7 +7,7 @@ import io.ckl.notificrash.NotifiCrash;
 public class CrashApplication extends Application {
 
 
-    private static final String NOTIFIBUG_SERIAL_NUMBER = "PUT_YOUR_NOTIFIBUG_SERIAL_HERE";
+    private static final String NOTIFICRASH_SERIAL_NUMBER = "PUT_YOUR_NOTIFICRASH_SERIAL_HERE";
 
     @Override
     public void onCreate() {
@@ -16,7 +16,7 @@ public class CrashApplication extends Application {
         // Enable debug (optional)
         NotifiCrash.setDebug(true);
         // Initializing NotifiCrash library
-        NotifiCrash.init(this, NOTIFIBUG_SERIAL_NUMBER);
+        NotifiCrash.init(this, NOTIFICRASH_SERIAL_NUMBER);
 
     }
 
