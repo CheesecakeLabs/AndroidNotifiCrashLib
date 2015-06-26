@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AndroidNotifiBug.iml" filepath="$PROJECT_DIR$/AndroidNotifiBug.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AndroidNotifiCrashLib.iml" filepath="$PROJECT_DIR$/AndroidNotifiCrashLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/crash-app/crash-app.iml" filepath="$PROJECT_DIR$/crash-app/crash-app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/notifibug/notifibug.iml" filepath="$PROJECT_DIR$/notifibug/notifibug.iml" />
+      <module fileurl="file://$PROJECT_DIR$/notificrash/notificrash.iml" filepath="$PROJECT_DIR$/notificrash/notificrash.iml" />
     </modules>
   </component>
 </project>
-

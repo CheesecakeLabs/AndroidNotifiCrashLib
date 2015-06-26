@@ -1,4 +1,4 @@
-# NotifiBug Library for Android
+# NotifiCrash Library for Android
 
 [![Download](https://api.bintray.com/packages/cheesecakelabs/maven/notifibug/images/download.svg)](https://bintray.com/cheesecakelabs/maven/notifibug/_latestVersion)
 [![License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](http://www.opensource.org/licenses/MIT)
@@ -17,7 +17,7 @@ compile 'io.ckl.notifibug:notifibug:0.3.0-snapshot'
 
 ## How to use it
 
-Below is an example of how to register NotifiBug library to handle uncaught exceptions of you app and send 
+Below is an example of how to register NotifiCrash library to handle uncaught exceptions of you app and send
 crash reports to NotifiCrash service.
 
 ### Permissions in manifest
@@ -28,7 +28,7 @@ The `AndroidManifest.xml` requires the permission `android.permission.INTERNET` 
 <!-- REQUIRED to send captures to NotifiCrash service -->
 <uses-permission android:name="android.permission.INTERNET" />
 
-<!-- OPTIONAL but makes NotifiBug smarter -->
+<!-- OPTIONAL but makes NotifiCrash smarter -->
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
 
@@ -41,8 +41,8 @@ public class MyApplication extends Application {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// NotifiBug will look for uncaught exceptions from previous runs and send them
-		NotifiBug.init(this, "YOUR_SERIAL_NUMBER");
+		// NotifiCrash will look for uncaught exceptions from previous runs and send them
+		NotifiCrash.init(this, "YOUR_SERIAL_NUMBER");
 
 	}
 
@@ -55,14 +55,14 @@ To enable logcat output in console add `setDebug(true)` just before `init`
 
 ```java
 	// Enable debug output (optional)
-	NotifiBug.setDebug(true);
-	// NotifiBug init
-	NotifiBug.init(this, "YOUR_SERIAL_NUMBER");
+	NotifiCrash.setDebug(true);
+	// NotifiCrash init
+	NotifiCrash.init(this, "YOUR_SERIAL_NUMBER");
 ```
 
 ### Others crash capture libraries
 
-If you are using other bug capturing libraries make sure that you init NotifiBug last.
+If you are using other bug capturing libraries make sure that you init NotifiCrash last.
 
 ```java
 public class MyApplication extends Application {
@@ -75,8 +75,8 @@ public class MyApplication extends Application {
 		initFlurry();
 		initParse();
 
-		// Make sure that NotifiBug is initialised last
-		NotifiBug.init(this, "YOUR_SERIAL_NUMBER");
+		// Make sure that NotifiCrash is initialised last
+		NotifiCrash.init(this, "YOUR_SERIAL_NUMBER");
 
 	}
 
@@ -92,8 +92,8 @@ Credits for most of the code goes to @joshdholtz
 
 ## Support or Contact
 
-Having trouble with NotifiBug? Check out the [javadocs](http://cheesecakelabs.github.io/AndroidNotifiBug/javadoc) or contact developer@ckl.io and we’ll help you out.
+Having trouble with NotifiCrash? Check out the [javadocs](http://cheesecakelabs.github.io/AndroidNotifiCrash/javadoc) or contact developer@ckl.io and we’ll help you out.
 
 ## License
 
-NotifiBug is available under the MIT license. See the [LICENSE](https://github.com/CheesecakeLabs/AndroidNotifiBug/blob/master/LICENSE) file for more info.
+NotifiCrash is available under the MIT license. See the [LICENSE](https://github.com/CheesecakeLabs/AndroidNotifiCrash/blob/master/LICENSE) file for more info.

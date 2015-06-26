@@ -2,7 +2,7 @@ package io.ckl.crash.app;
 
 import android.app.Application;
 
-import io.ckl.notifibug.NotifiBug;
+import io.ckl.notificrash.NotifiCrash;
 
 public class CrashApplication extends Application {
 
@@ -14,9 +14,9 @@ public class CrashApplication extends Application {
         super.onCreate();
 
         // Enable debug (optional)
-        NotifiBug.setDebug(true);
-        // Initializing NotifiBug library
-        NotifiBug.init(this, NOTIFIBUG_SERIAL_NUMBER);
+        NotifiCrash.setDebug(true);
+        // Initializing NotifiCrash library
+        NotifiCrash.init(this, NOTIFIBUG_SERIAL_NUMBER);
 
     }
 
