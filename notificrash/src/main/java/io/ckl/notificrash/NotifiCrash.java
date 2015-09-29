@@ -18,6 +18,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import io.ckl.notificrash.data.InternalStorage;
 import io.ckl.notificrash.events.EventBuilder;
@@ -40,14 +41,34 @@ public class NotifiCrash {
     private String mPackageName;
     private String mSerialNumber;
     private static Boolean mDebug;
+    private HashMap<String, String> extraArguments;
 
     private EventsListener mCaptureListener;
 
     private NotifiCrash() {
+        extraArguments = new HashMap<>();
     }
 
     public static NotifiCrash getInstance() {
         return LazyHolder.instance;
+    }
+
+    public HashMap<String, String> getExtraArguments() {
+        HashMap<String,String> applicationExtraArguments;
+        try {
+            applicationExtraArguments = ((NotifiCrashArguments) mContext).getExtraArguments();
+        }
+        catch (ClassCastException e) {
+            applicationExtraArguments = null;
+        }
+
+        extraArguments.putAll(applicationExtraArguments);
+
+        return extraArguments;
+    }
+
+    public void addExtra(String mKey, String mValue) {
+        extraArguments.put(mKey, mValue);
     }
 
     private static class LazyHolder {
