@@ -67,8 +67,13 @@ public class NotifiCrash {
         return extraArguments;
     }
 
-    public void addExtra(String mKey, String mValue) {
-        extraArguments.put(mKey, mValue);
+    /**
+     * Add an extra argument that will be logged when the app crashes
+     * @param key Extra argument key
+     * @param value Extra argument value
+     */
+    public void addExtra(String key, String value) {
+        extraArguments.put(key, value);
     }
 
     private static class LazyHolder {
