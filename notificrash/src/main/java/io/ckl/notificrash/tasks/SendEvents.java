@@ -27,6 +27,7 @@ public class SendEvents extends Thread {
 
         boolean sendSuccessful = false;
         Response response = null;
+        InternalStorage.getInstance().storeUnsentEvent(mEventRequest);
 
         try {
             i("Trying to send crash data");
@@ -44,11 +45,9 @@ public class SendEvents extends Thread {
             i("Event post to server " + sendStatus);
         }
 
-        if (sendSuccessful) {
+        if (sendSuccessful)
             InternalStorage.getInstance().removeSentEvent(mEventRequest);
-        } else {
-            InternalStorage.getInstance().storeUnsentEvent(mEventRequest);
-        }
+
     }
 
     /**

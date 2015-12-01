@@ -32,6 +32,7 @@ public class EventBuilder implements Serializable {
     private static final String CRASH_LEVEL = "crash_level";
 
     private static final String APP_SERIAL_NUMBER = "application";
+    private static final String EXTRA_ARGUMENTS = "extra";
 
     private final static SimpleDateFormat dateFormat = new SimpleDateFormat(TIMESTAMP_FORMAT, Locale.getDefault());
 
@@ -53,6 +54,7 @@ public class EventBuilder implements Serializable {
         this.setDeviceInfo();
         this.setAppVersion();
         this.setAndroidVersion();
+        this.setExtraArguments();
 
         this.setName(CrashHelper.findName(throwable));
         this.setReason(CrashHelper.findReason(throwable));
@@ -189,6 +191,19 @@ public class EventBuilder implements Serializable {
      */
     public EventBuilder setAndroidVersion() {
         mEvent.put(CRASH_OS_VERSION, NotifiCrash.getInstance().getAndroidVersion());
+        return this;
+    }
+
+    /**
+     * "extra": "1.1"
+     *
+     * @return EventBuilder
+     */
+    public EventBuilder setExtraArguments() {
+        HashMap<String, String> extraArguments = NotifiCrash.getInstance().getExtraArguments();
+        if (extraArguments != null) {
+            mEvent.put(EXTRA_ARGUMENTS, NotifiCrash.getInstance().getExtraArguments());
+        }
         return this;
     }
 
