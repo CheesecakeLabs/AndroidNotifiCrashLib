@@ -9,8 +9,7 @@ import io.ckl.notificrash.NotifiCrashArguments;
 
 public class CrashApplication extends Application implements NotifiCrashArguments {
 
-//    private static final String NOTIFICRASH_SERIAL_NUMBER = "PUT_YOUR_NOTIFICRASH_SERIAL_HERE";
-    private static final String NOTIFICRASH_SERIAL_NUMBER = "30a8c031b61328738fe313fd678bc8";
+    private static final String NOTIFICRASH_SERIAL_NUMBER = "PUT_YOUR_NOTIFICRASH_SERIAL_HERE";
 
     private String getUser() {
         return "MyUser";
@@ -27,7 +26,6 @@ public class CrashApplication extends Application implements NotifiCrashArgument
 
         // Add an extra argument to NotifiCrash log
         NotifiCrash.getInstance().addExtra("MyKey", "MyValue");
-
     }
 
     // Method that retrieve the extra arguments when an app crashes
